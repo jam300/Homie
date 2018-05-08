@@ -1,39 +1,45 @@
 import string
+import numpy as np
 
 
 def main():
-	list_letra = list(string.ascii_uppercase[:])  # lista de letras
-	let = input("Introduzca una letra: ")  # pedir la letra
-	index_letra = list_letra.index(let.upper())  # obtener le indice de la letra
-	n = index_letra + 1
+	list_letra = list(string.ascii_uppercase[:])
+	let = input("Introduzca una letra: ")
+	simbolo = input(
+		"Introduzca un simbolo si quiere sustituir el espacio de caso contrario deje un espacio y presione Enter: ")
 
-	for i in range(0, n):
-		for k in range(n - 1, 0, -1):
-			if k == i:
-				print(list_letra[i], end="")
+	index_letra = list_letra.index(let.upper())
+	# print(index_letra)
+	if (index_letra == 0):
+		print(list_letra[index_letra])
+	else:
+		D = 2 * (index_letra)
+		I = D - 1
+		M = np.empty((D + 1, D + 1), dtype='str')
+		M[:] = simbolo
+		# print(M)
+		# print(index_letra)
+		# print(D)
+		# print(I)
+		# M[1][0], M[0][0]= 'B','B'
+		# print(M)
+		for i in range(0, index_letra):
+			if (i == 0):
+				M[i][int(D / 2)] = list_letra[i]
+				M[D][int(D / 2)] = list_letra[i]
+				M[int(D / 2)][i] = list_letra[index_letra]
+				M[int(D / 2)][D] = list_letra[index_letra]
 			else:
-				print('*', end="")
-		for j in range(0, n):
-			if j == i:
-				print(list_letra[i], end="")
-			else:
-				print('*', end="")
+				M[i][(int(D / 2)) - i] = list_letra[i]
+				M[i][(int(D / 2)) + i] = list_letra[i]
+				M[D - i][(int(D / 2)) - i] = list_letra[i]
+				M[D - i][(int(D / 2)) + i] = list_letra[i]
+			# print(M)
 
-		print('')
+		for i in range(0, D + 1):
+			for j in range(0, D + 1):
+				print(M[i][j], end="")
+				print(" ")
 
-	for i in range(n - 1, 0, -1):
-		for k in range(n - 1, 0, -1):
-			if k == i - 1:
-				print(list_letra[i - 1], end="")
-			else:
-				print('*', end="")
-		for j in range(1, n + 1):
-			if (j == i):
-				print(list_letra[i - 1], end="")
-			else:
-				print('*', end="")
-		print('')
-
-
-if __name__ == '__main__':
-    main()
+	if __name__ == '__main__':
+		main()
